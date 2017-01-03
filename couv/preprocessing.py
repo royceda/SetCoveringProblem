@@ -38,7 +38,7 @@ def rule_1(problem, verbose=False):
             temp = np.delete(temp, i-lr, axis=0);
             lr += 1
             temp = np.delete(temp, k-lc, axis=1);
-            x[k-lc] = 1;
+            x[k-lc] = 1; print "x[",k-lc,"] = 1"
             x = np.delete(x, k-lc);
             c = np.delete(c, k-lc);
             lc += 1;
@@ -99,19 +99,19 @@ def rule_3(problem, verbose=False):
     while j < m:
         while k < m:
             #print j, " ",k
-            if(j != k):
+            if(j != k ):
                 if(is_include(temp[:,j-lc], temp[:,k-lc]) and c[j-lc] >= c[k-lc]):
                     if(verbose): print "Iteration1 ",j, " ", k,". Vector : ", temp[:,j-lc]," is include in ", temp[:,k-lc];
                     print " j = ",j," k = ", k
                     temp = np.delete(temp, j-lc, axis=1);
-                    x[j-lc] = -1;
+                    x[j-lc] = -1; print "x[",j-lc,"] = 0"
                     x = np.delete(x, j-lc);
                     c = np.delete(c, j-lc);
                     lc += 1;
                 elif(is_include(temp[:,k-lc], temp[:,j-lc])  and c[k-lc] >= c[j-lc]):
-                    if(verbose): print "Iteration ",k,". Vector : ", temp[:,k-lc]," is include in ", temp[:,j-lc];
+                    if(verbose): print "Iteration2 ",k,". Vector : ", temp[:,k-lc]," is include in ", temp[:,j-lc];
                     temp = np.delete(temp, k-lc, axis=1);
-                    x[k-lc] = -1;
+                    x[k-lc] = -1; print "x[",k-lc,"] = 0"
                     x = np.delete(x, k-lc);
                     c = np.delete(c, k-lc);
                     lc += 1;
