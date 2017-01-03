@@ -16,6 +16,11 @@ if __name__ == "__main__":
     [1,0,0,1,1,0,0,1,1]]);
 
 
+    index = [];
+    for i in range(0, ref.shape[1]):
+        index.append(i);
+    print index
+
     x = np.array(np.zeros(ref.shape[1])) #final x
     c = np.array([10,5,8,6,9,13,11,4,6]) #final
     print c
@@ -44,35 +49,26 @@ if __name__ == "__main__":
     assert is_include(w,v) == False
 
 
-    scp = [ref, x, c];
+    prob = [ref, x, c];
 
+    print ref
+    #test rule 1 and 2
+    prob = rule_1(prob,False);
+    prob = rule_2(prob,False);
 
-
-    #test rule 2
-    tab = rule_1(ref,x,c,False);
-    ref = tab[0];
-    x = tab[1];
-    c = tab[2];
+    # OK
     #print "before : \n",ref
     #print "after : \n", rule_2(ref, True);
 
-    print "Before rule 4:\n", ref
-    print "Before solving : ", x
-    print c
-
-
     #test rule_3
-    ref = rule_2(ref,False);
     #print "before : \n",ref
     #print "after : \n", rule_3(ref,x,c, True);
 
-    tab = rule_3(ref,x,c, False);
-    ref = tab[0]
-    x = tab[1]
-    c = tab[2]
-
-    ref = rule_2(ref,False);
-    tab = rule_3(ref,x,c, False);
-    ref = tab[0]
-    x = tab[1]
-    c = tab[2]
+    prob = rule_3(prob, True);
+    prob = rule_2(prob, False);
+    prob = rule_3(prob, True);
+    prob = rule_2(prob, False);
+    prob = rule_3(prob, True);
+    print "Before rule 4:\n", prob[0]
+    print "Before solving : \n", prob[1]
+    print prob[2]
