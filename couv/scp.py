@@ -16,13 +16,12 @@ if __name__ == "__main__":
     [1,0,0,1,1,0,0,1,1]]);
 
 
-    x = np.zeros(ref.shape[1])
-    c = np.array([10,5,8,6,9,13,11,4,6])
+    x = np.array(np.zeros(ref.shape[1])) #final x
+    c = np.array([10,5,8,6,9,13,11,4,6]) #final
     print c
 
 
     #search_k test
-
     e1 = np.array([0,1,0,0,0]);
     e0 = np.array([1,0,0,0,0]);
     e4 = np.array([0,0,0,0,1]);
@@ -45,10 +44,21 @@ if __name__ == "__main__":
     assert is_include(w,v) == False
 
 
+    scp = [ref, x, c];
+
+
+
     #test rule 2
-    ref = rule_1(ref,x,False);
+    tab = rule_1(ref,x,c,False);
+    ref = tab[0];
+    x = tab[1];
+    c = tab[2];
     #print "before : \n",ref
     #print "after : \n", rule_2(ref, True);
+
+    print "Before rule 4:\n", ref
+    print "Before solving : ", x
+    print c
 
 
     #test rule_3
@@ -56,9 +66,13 @@ if __name__ == "__main__":
     #print "before : \n",ref
     #print "after : \n", rule_3(ref,x,c, True);
 
-    ref = rule_3(ref,x,c, True);
-    ref = rule_2(ref,False);
-    ref = rule_3(ref,x,c,False);
+    tab = rule_3(ref,x,c, False);
+    ref = tab[0]
+    x = tab[1]
+    c = tab[2]
 
-    print "Before rule 4:\n", ref
-    print "Before solving : ", x
+    ref = rule_2(ref,False);
+    tab = rule_3(ref,x,c, False);
+    ref = tab[0]
+    x = tab[1]
+    c = tab[2]

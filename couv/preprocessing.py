@@ -10,9 +10,10 @@ def search_k(v):
 
 
 
-def rule_1(T, x, verbose=False):
+def rule_1(T, x, c, verbose=False):
     'Apply the preprocessing rule number 1 to the matrix T'
-    temp = T
+    temp = T;
+    x0 = x; c0 = c;
     if(verbose): print("rule 1 : \n")
     n = T.shape[0];
     m = T.shape[1];
@@ -27,14 +28,16 @@ def rule_1(T, x, verbose=False):
             temp = np.delete(temp, i-lr, axis=0);
             lr += 1
             temp = np.delete(temp, k-lc, axis=1);
-            x[k] = 1; #x = np.delete(x, k, axis=0)
+            x0[k-lc] = 1;
+            #x0 = np.delete(x0, k-lc);
+            c0 = np.delete(c0, k-lc, axis=0);
             lc += 1;
             for l in range(0, n):
                 if(T[l,k] == 1 and l != i):
                     if(verbose): print "T[l][k] : ", l," ",k
                     temp = np.delete(temp, l-lr, axis=0);
                     lr += 1
-    return temp
+    return [temp, x0, c0]
 
 
 
@@ -76,6 +79,8 @@ def rule_2(T, verbose=False):
 def rule_3(T,x,c,verbose=False):
     'Apply the preprocessing rule number 1 to the matrix T'
     temp = T;
+    x0 = x;
+    c0 = c;
     m = temp.shape[1];
     lc = 0;
     j = 0;
@@ -84,19 +89,23 @@ def rule_3(T,x,c,verbose=False):
         while k < m:
             #print j, " ",k
             if(j != k):
-                if(is_include(temp[:,j-lc], temp[:,k-lc]) == True and c[j] >= c[k]):
+                if(is_include(temp[:,j-lc], temp[:,k-lc]) == True and c[j-lc] >= c[k-lc]):
                     if(verbose): print "Iteration ",j,". Vector : ", temp[:,j-lc]," is include in ", T[:,k-lc];
                     temp = np.delete(temp, j-lc, axis=1);
-                    x[j] = -1; #x = np.delete(x, j-lc, axis=0)
+                    x0[j-lc] = -1;
+                    x0 = np.delete(x0, j-lc, axis=0)
+                    c0 = np.delete(c0, k-lc, axis=0);
                     lc += 1;
-                elif(is_include(temp[:,k-lc], temp[:,j-lc]) == True and c[k] >= c[j]):
+                elif(is_include(temp[:,k-lc], temp[:,j-lc]) == True and c[k-lc] >= c[j-lc]):
                     if(verbose): print "Iteration ",k,". Vector : ", temp[:,k-lc]," is include in ", T[:,j-lc];
                     temp = np.delete(temp, k-lc, axis=1);
-                    x[k] = -1; #x = np.delete(x, k-lc, axis=0)
+                    x0[k-lc] = -1;
+                    x0 = np.delete(x0, k-lc, axis=0);
+                    c0 = np.delete(c0, k-lc, axis=0);
                     lc += 1;
             k += 1;
         j += 1;
-    return temp
+    return [temp, x0, c0]
 
 
 #Todo

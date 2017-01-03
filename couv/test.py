@@ -20,3 +20,27 @@ print "after : ", x
 x = np.delete(x, 2, axis=1)
 
 print "after : ", x
+
+
+c = np.array([1,2,3,4]);
+c = np.delete(c, 0, axis=0);
+
+print c
+
+mat = np.array([[1, 1, 0],
+ [1, 0, 1],
+ [0, 1, 1]])
+
+print mat;
+print np.rank(mat)
+
+ref = np.array([
+[1,1,1,0,1,0,1,1,0],
+[0,1,1,0,0,0,0,1,0],
+[0,1,0,0,1,1,0,1,1],
+[0,0,0,1,0,0,0,0,0],
+[1,0,1,0,1,1,0,0,1],
+[0,1,1,0,0,0,1,0,1],
+[1,0,0,1,1,0,0,1,1]]);
+
+print "rank(ref) : ", np.rank(ref);
