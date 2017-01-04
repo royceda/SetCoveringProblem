@@ -53,9 +53,9 @@ if __name__ == "__main__":
 
     print ref
     #test rule 1 and 2
-    prob = rule_1(prob,False);
-    prob = rule_2(prob,False);
-
+    prob = rule_1(prob,True);
+    prob = rule_2(prob,True);
+    prob = rule_3(prob,True);
     # OK
     #print "before : \n",ref
     #print "after : \n", rule_2(ref, True);
@@ -64,11 +64,13 @@ if __name__ == "__main__":
     #print "before : \n",ref
     #print "after : \n", rule_3(ref,x,c, True);
 
-    prob = rule_3(prob, True);
-    prob = rule_2(prob, False);
-    prob = rule_3(prob, True);
-    prob = rule_2(prob, False);
-    prob = rule_3(prob, True);
+
+    #prob = rule_2(prob, False);
+    #prob = rule_3(prob, True);
+    #prob = rule_2(prob, False);
+    #prob = rule_2(prob, False);
+    #prob = rule_3(prob, False);
+
     print "Before rule 4:\n", prob[0]
     print "Before solving : \n", prob[1]
     print prob[2]
