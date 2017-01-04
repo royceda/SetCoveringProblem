@@ -21,6 +21,7 @@ def search_k(v):
 #OK
 def rule_1(problem, verbose=False):
     'Apply the preprocessing rule number 1 to the problem [T, x, c]'
+    print "rule 1"
     T = problem[0];
     temp = T;
     x = problem[1];
@@ -45,7 +46,7 @@ def rule_1(problem, verbose=False):
             lc += 1;
             for l in range(0, n):
                 if(T[l,k] == 1 and l != i):
-                    if(verbose): print "T[l][k] : ", l," ",k
+                    if(verbose): print " supp T[l][k] : ", l," ",k
                     temp = np.delete(temp, l-lr, axis=0);
                     lr += 1
     return [temp, x, c]
@@ -68,7 +69,7 @@ def rule_2(problem, verbose=False):
     lr = 0;
     for i in range(0, n):
         for l in range(0, n):
-            if(i != l and lr < n):
+            if(i != l and i >= lr and l >= lr):
                 #print "lr = ", lr
                 if(is_include(temp[i-lr,:], temp[l-lr,:])):
                     if(verbose): print "Iteration ",i,". Vector : ", temp[i-lr,:]," is include in ", temp[l-lr,:];
@@ -83,6 +84,16 @@ def rule_2(problem, verbose=False):
     return [temp, problem[1], problem[2]];
 
 
+def test_rule_3(temp, c):
+    print "test rule 3 : "
+    for i in range(0, temp.shape[1]):
+        for j in range(0, temp.shape[1]):
+            if(is_include(temp[:,i], temp[:,j]) and c[i] > c[j]):
+                return True;
+            elif(is_include(temp[:,j], temp[:,i]) and c[j] > c[i]):
+                return True
+    return False
+
 #debug
 def rule_3(problem, verbose=False):
     'Apply the preprocessing rule number 1 to the problem [T, x, c]'
@@ -93,26 +104,28 @@ def rule_3(problem, verbose=False):
     c = problem[2]
     n = temp.shape[1];
     lr = 0;
-    for i in range(0, n):
-        for l in range(0, n):
-            if(i != l and lr < n):
-                #print "lr = ", lr
-                if(is_include(temp[:,i-lr], temp[:,l-lr]) and c[i-lr] > c[l-lr]):
-                    if(verbose): print "Iteration ",i,". Vector : ", temp[:,i-lr]," is include in ", temp[:,l-lr];
-                    temp = np.delete(temp, l-lr, axis=1);
-                    x = np.delete(x, l-lr);
-                    c = np.delete(c, l-lr);
-                    print "x[",l-lr,"] = 0"
-                    lr += 1;
-                    n = temp.shape[1];
-                elif(is_include(temp[:,l-lr], temp[:,i-lr]) and c[l-lr] > c[i-lr]):
-                    if(verbose): print "Iteration ",l,". Vector : ", temp[:,l-lr]," is include in ", temp[:,i-lr];
-                    temp = np.delete(temp, i-lr, axis=1);
-                    x = np.delete(x, i-lr);
-                    c = np.delete(c, i-lr);
-                    print "x[",i-lr,"] = 0"
-                    lr += 1;
-                    n = temp.shape[1];
+    while test_rule_3(temp, c):
+        for i in range(0,n):
+            for l in range(0,n):
+                if(i != l and i >= lr and l >= lr):
+                    #print "lr = ", lr
+                    print ' i : ',i, " l :  ",l
+                    if(is_include(temp[:,i-lr], temp[:,l-lr]) and c[i-lr] >= c[l-lr]):
+                        if(verbose): print "Iteration ",i,". Vector : ", temp[:,i-lr]," is include in ", temp[:,l-lr];
+                        temp = np.delete(temp, l-lr, axis=1);
+                        x = np.delete(x, l-lr);
+                        c = np.delete(c, l-lr);
+                        print "x[",l-lr,"] = 0"
+                        lr += 1;
+                        n = temp.shape[1];
+                    elif(is_include(temp[:,l-lr], temp[:,i-lr]) and c[l-lr] >= c[i-lr]):
+                        if(verbose): print "Iteration ",l,". Vector : ", temp[:,l-lr]," is include in ", temp[:,i-lr];
+                        temp = np.delete(temp, i-lr, axis=1);
+                        x = np.delete(x, i-lr);
+                        c = np.delete(c, i-lr);
+                        print "x[",i-lr,"] = 0"
+                        lr += 1;
+                        n = temp.shape[1];
     return [temp, x, c];
 
 
