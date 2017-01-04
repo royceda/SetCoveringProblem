@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     print ref
     #test rule 1 and 2
-    prob = rule_1(prob,True);
+    prob = rule_1(prob,False);
     prob = rule_2(prob,True);
     prob = rule_3(prob,True);
     # OK
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     #print "after : \n", rule_3(ref,x,c, True);
 
 
-    #prob = rule_2(prob, False);
+    prob = rule_1(prob, False);
     #prob = rule_3(prob, True);
     #prob = rule_2(prob, False);
     #prob = rule_2(prob, False);

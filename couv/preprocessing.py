@@ -33,7 +33,7 @@ def rule_1(problem, verbose=False):
     for i in range(0,n):
         v = temp[i-lr,:];
         if(verbose): print " line ",i," : ", v
-        if(np.linalg.norm(v) == 1):
+        if(np.linalg.norm(v) == 1 and i >= lr ):
             k = search_k(v);
             if(verbose): print "k : ",k," for line : ",i
             temp = np.delete(temp, i-lr, axis=0);
