@@ -1,5 +1,5 @@
 import numpy as np
-from preprocessing import rule_1, rule_2, rule_3, is_include, search_k
+from preprocessing import rule_1, rule_2, rule_3, is_include, search_k, rule_4
 
 
 
@@ -65,9 +65,9 @@ if __name__ == "__main__":
     #print "after : \n", rule_3(ref,x,c, True);
 
 
-    prob = rule_1(prob, False);
-    #prob = rule_3(prob, True);
-    #prob = rule_2(prob, False);
+    prob = rule_4(prob, False);
+    prob = rule_2(prob, True);
+    prob = rule_3(prob, False);
     #prob = rule_2(prob, False);
     #prob = rule_3(prob, False);
 

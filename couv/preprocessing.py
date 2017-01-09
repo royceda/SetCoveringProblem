@@ -130,5 +130,27 @@ def rule_3(problem, verbose=False):
 
 
 #Todo
-def rule_4(T, x, verbose=False):
-    return 0;
+def rule_4(problem, verbose=False):
+    temp = problem[0]
+    x = problem[1]
+    c = problem[2]
+    lr = 0;
+
+    for j in range(0, temp.shape[1]):
+        if(np.linalg.norm(temp[:,j]) > 1 ):
+            s_list = []
+            #compute min
+            for i in range(0, temp.shape[0]):
+                tmp_list = []
+                for k in range(0, temp.shape[1]):
+                    if( temp[i][k] == 1):
+                        tmp_list.append(c[k]);
+                s_list.append(min(tmp_list))
+            #prepare sum with list min
+            s = sum(s_list);
+            if(c[j] >= s):
+                x[j] = 0;
+                temp = np.delete(temp, j-lr, axis=1);
+                lr += 1;
+                x[j] = 0;
+    return [temp, x, c];
